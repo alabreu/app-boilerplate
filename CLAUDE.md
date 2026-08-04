@@ -25,6 +25,11 @@ Supabase + Vercel). Extraído dos padrões do Tutor Brew
   `admin_metrics()`/`admin_feedback()` (security definer, allowlist
   `public.admins`). Eventos de uso: `core/analytics.ts` (`track()`,
   insert-only em `analytics_events`); o shell registra `session_start`.
+- LLM via OpenRouter: `core/llm/client.ts` — `streamChat()` com dois modos
+  atrás da mesma interface (proxy pela Edge Function `llm`, ou BYOK com a chave
+  do próprio usuário), precedência resolvida em runtime. A chave do operador é
+  secret do servidor; NUNCA criar `VITE_OPENROUTER_API_KEY`. Cota atômica com
+  limite por usuário + global na migração `0003`. Sem UI de chat de propósito.
 - PWA + toast de atualização (`vite-plugin-pwa` modo prompt).
 
 ## Regras

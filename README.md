@@ -99,6 +99,61 @@ do Stripe vive **só** como secret da Edge Function, nunca no código.
   `track('nome_do_evento')` de `core/analytics.ts` — o funil do seu app é você
   quem define.
 
+### LLM (OpenRouter)
+
+Dois modos atrás de **uma única interface de streaming** (`core/llm/client.ts`).
+Quem chama não sabe qual está ativo — só recebe tokens via `streamChat()`.
+
+| Modo | Chave de quem | Quem paga | Quando vale |
+| --- | --- | --- | --- |
+| `proxy` | sua, secret no servidor | você | o caso comum: usuário logado, com cota |
+| `byok` | do próprio usuário, no localStorage dele | ele | power user que quer escapar do rate limit |
+
+A precedência é resolvida em **runtime**, não em build-time: chave própria →
+sessão válida → indisponível. Ou seja, quem cola a própria chave não consome sua
+cota — funciona como escape hatch de plano pago.
+
+**Nenhum secret entra no bundle.** Não existe `VITE_OPENROUTER_API_KEY`: env var
+`VITE_*` vira código público. A sua chave vive na Edge Function:
+
+```sh
+supabase secrets set OPENROUTER_API_KEY=sk-or-v1-...
+supabase secrets set ALLOWED_ORIGIN=https://seu-app.vercel.app
+supabase functions deploy llm
+```
+
+Rode também a migração `0003_llm_usage.sql` no SQL Editor — ela cria os
+contadores de cota. E **ponha um teto de gasto na própria chave do OpenRouter**:
+é a única defesa que sobrevive a um bug no seu código.
+
+O que a function faz, nesta ordem (a ordem importa):
+
+1. **Auth primeiro** — sem sessão, 401.
+2. **Valida o body antes de tocar no contador** — requisição malformada não
+   queima cota de ninguém.
+3. **Resolve o modelo no servidor.** O `model` que o cliente manda é
+   **ignorado** — é a proteção mais importante e a mais fácil de esquecer: sem
+   ela qualquer um força o modelo mais caro e a conta é sua.
+4. **Limites de tamanho** (nº de mensagens, chars por mensagem e no total).
+5. **Reconstrói as mensagens** com apenas `role` + `content`, um único `system`
+   e só no índice 0 — o objeto do cliente nunca é repassado.
+6. **Incrementa a cota atomicamente**, e **estorna** se estourou o limite ou se
+   o upstream falhou (modelo sobrecarregado devolve 429 o tempo todo; sem
+   estorno a cota do usuário evapora sem ele receber nada).
+7. Chama o OpenRouter e repassa o stream, com telemetria de tokens/custo num
+   ramo separado (`body.tee()` + `waitUntil`) que nunca afeta a resposta.
+
+Erros do OpenRouter **nunca** são repassados crus: um 402 vem com "you have X
+credits left" e vazaria seu estado financeiro. O mapeamento é status → código
+genérico, e toda resposta sai com CORS (sem isso, uma falha vira erro opaco de
+CORS e o seu tratamento amigável nunca roda).
+
+Para adaptar ao seu produto, mexa no bloco `CONFIG` no topo de
+`supabase/functions/llm/index.ts`: `systemPrompt`, `allowedModels`,
+`defaultModel`, `dailyLimitPerUser`, `dailyLimitGlobal`, `maxTokens` e os
+limites de tamanho. O template não traz UI de chat — isso é produto, não
+boilerplate.
+
 ## Arquitetura: "cérebro" vs "pele"
 
 ```
