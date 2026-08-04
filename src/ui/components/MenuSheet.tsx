@@ -8,7 +8,7 @@ import {
   SignIn,
   Translate,
 } from '@phosphor-icons/react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router'
 import { getUnreadCount } from '@core/changelog'
 import { donateConfigured } from '@core/donate'
 import type { MessageKey } from '@core/i18n'
