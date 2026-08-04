@@ -154,6 +154,15 @@ Para adaptar ao seu produto, mexa no bloco `CONFIG` no topo de
 limites de tamanho. O template não traz UI de chat — isso é produto, não
 boilerplate.
 
+**Modelo padrão: `deepseek/deepseek-chat`** — a linha de chat da DeepSeek, sem
+sufixo de versão de propósito: no OpenRouter o ID sem versão é o alias que
+sempre aponta para a release mais recente daquela linha, então você não precisa
+editar o código a cada lançamento. Trocar de modelo é uma linha em dois lugares:
+`defaultModel` (Edge Function) e `byokModel` (`core/llm/config.ts`) — mantenha os
+dois em sincronia, senão quem usa a própria chave recebe um modelo diferente de
+quem usa o proxy. As cotas (40/usuário/dia, 2000 global) foram dimensionadas
+para um modelo caro; com a DeepSeek dá folga para subir bastante.
+
 ## Arquitetura: "cérebro" vs "pele"
 
 ```

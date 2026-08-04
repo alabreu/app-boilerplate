@@ -20,15 +20,20 @@ declare const EdgeRuntime: { waitUntil(promise: Promise<unknown>): void }
 // Config do app. É isto que muda de produto para produto.
 // ---------------------------------------------------------------------------
 const CONFIG = {
-  /** Modelos que este proxy aceita. Serve de trava de custo — ver `resolveModel`. */
-  allowedModels: [
-    'anthropic/claude-opus-5',
-    'anthropic/claude-sonnet-5',
-    'anthropic/claude-haiku-4.5',
-  ],
-  /** O modelo que roda de fato. Trocar por um mais barato da allowlist é a
-   *  alavanca de custo mais direta se o proxy ficar caro. */
-  defaultModel: 'anthropic/claude-opus-5',
+  /** Modelos que este proxy aceita. Serve de trava de custo — ver `resolveModel`.
+   *  Para trocar de modelo, mexa AQUI (e no `byokModel` de core/llm/config.ts),
+   *  nunca aceitando o `model` que o cliente mandar.
+   *
+   *  Alternativas comuns, se o produto pedir mais capacidade:
+   *    'anthropic/claude-opus-5'   — o mais capaz, e o mais caro
+   *    'anthropic/claude-sonnet-5' — meio-termo
+   *    'deepseek/deepseek-r1'      — a linha de raciocínio da DeepSeek */
+  allowedModels: ['deepseek/deepseek-chat'],
+  /** O modelo que roda de fato. Sem sufixo de versão de propósito: no
+   *  OpenRouter o ID sem versão é um alias que sempre aponta para a release
+   *  mais recente daquela linha — é o que mantém "sempre o mais recente" sem
+   *  precisar editar este arquivo a cada release da DeepSeek. */
+  defaultModel: 'deepseek/deepseek-chat',
   /** Prompt de sistema do produto (persona, regras). Vazio = sem system. */
   systemPrompt: '',
   dailyLimitPerUser: 40,

@@ -7,8 +7,13 @@ export const LLM = {
   /**
    * Modelo usado no modo BYOK (chave do próprio usuário). No modo proxy quem
    * decide é o servidor — o `model` mandado pelo cliente é ignorado lá.
+   *
+   * Mantenha em sincronia com o `defaultModel` da Edge Function
+   * (supabase/functions/llm/index.ts), senão quem usa a própria chave recebe um
+   * modelo diferente de quem usa o proxy. Sem sufixo de versão: o ID sem versão
+   * é o alias que sempre aponta para a release mais recente da linha.
    */
-  byokModel: 'anthropic/claude-opus-5',
+  byokModel: 'deepseek/deepseek-chat',
   maxTokens: 1024,
   maxMessages: 30,
   maxCharsPerMessage: 8000,
