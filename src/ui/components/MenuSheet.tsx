@@ -58,6 +58,14 @@ export function MenuSheet({ open, onClose }: MenuSheetProps) {
   const dialogRef = useRef<HTMLDivElement>(null)
   const returnFocusRef = useRef<HTMLElement | null>(null)
 
+  // O pai recria `onClose` a cada render; o listener lê pela ref para o effect
+  // de foco depender só de `open` — senão qualquer re-render com o sheet aberto
+  // rodava o cleanup, devolvia o foco no meio do uso e resetava o trap.
+  const onCloseRef = useRef(onClose)
+  useEffect(() => {
+    onCloseRef.current = onClose
+  }, [onClose])
+
   useEffect(() => {
     if (!open) return
     returnFocusRef.current = document.activeElement as HTMLElement | null
@@ -65,7 +73,7 @@ export function MenuSheet({ open, onClose }: MenuSheetProps) {
 
     function onKeyDown(e: KeyboardEvent) {
       if (e.key === 'Escape') {
-        onClose()
+        onCloseRef.current()
         return
       }
       if (e.key !== 'Tab') return
@@ -90,7 +98,7 @@ export function MenuSheet({ open, onClose }: MenuSheetProps) {
       document.removeEventListener('keydown', onKeyDown)
       returnFocusRef.current?.focus()
     }
-  }, [open, onClose])
+  }, [open])
 
   function go(to: string) {
     onClose()

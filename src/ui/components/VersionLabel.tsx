@@ -1,4 +1,4 @@
-import { useRef } from 'react'
+import { useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router'
 import { APP_NAME } from '@core/config'
 
@@ -11,6 +11,12 @@ export function VersionLabel({ className }: { className?: string }) {
   const navigate = useNavigate()
   const taps = useRef(0)
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null)
+
+  useEffect(() => {
+    return () => {
+      if (timer.current) clearTimeout(timer.current)
+    }
+  }, [])
 
   function onTap() {
     taps.current += 1
