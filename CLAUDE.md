@@ -20,20 +20,75 @@ Supabase + Vercel). Extraído dos padrões do Tutor Brew
   só aparece configurado. Upgrade para Checkout dinâmico: ver README.
 - Menu do topo direito: `ui/components/MenuSheet.tsx` — itens específicos do
   app entram no array `ITEMS`. Rodapé mostra versão + sha + hora do build
-  (`VersionLabel`); 5 toques abrem o `/admin`.
+  (`VersionLabel`); 5 toques abrem o `/design`, toque longo abre o `/admin`.
 - Painel de admin: `/admin` (lazy, sem link na UI), KPIs via RPCs
   `admin_metrics()`/`admin_feedback()` (security definer, allowlist
   `public.admins`). Eventos de uso: `core/analytics.ts` (`track()`,
   insert-only em `analytics_events`); o shell registra `session_start`.
+- LLM via OpenRouter: `core/llm/client.ts` — `streamChat()` com dois modos
+  atrás da mesma interface (proxy pela Edge Function `llm`, ou BYOK com a chave
+  do próprio usuário), precedência resolvida em runtime. A chave do operador é
+  secret do servidor; NUNCA criar `VITE_OPENROUTER_API_KEY`. Cota atômica com
+  limite por usuário + global na migração `0003`. Sem UI de chat de propósito.
+- Design system em três camadas — **primitivos** (valores crus em `:root`,
+  `--palette-*`) → **tokens semânticos** (`@theme`, `--color-*`/`--radius-*`/
+  `--text-*`, nomeados por papel) → **componentes** (`src/ui/design/`: `Button`,
+  `IconButton`, `Card`, `Chip`, `Field`/`Input`/`Textarea`, `SectionTitle`,
+  `Screen`/`ScreenBody`, `Sheet`). "Primitivo" aqui é token, nunca componente.
+  Tema claro/escuro repontando só a camada semântica. Vitrine viva em `/design`
+  (lazy, sem link), com alternador de tema.
 - PWA + toast de atualização (`vite-plugin-pwa` modo prompt).
 
 ## Regras
 
 - Acessibilidade: toda feature nova segue `ACCESSIBILITY.md` (contraste AA,
-  teclado, leitor de tela, reduced motion — tem checklist no fim). O padrão de
-  sheet acessível para copiar é o `MenuSheet` (Escape, trap e retorno de foco,
-  `invisible` quando fechado). Nunca desabilitar zoom no viewport nem remover
-  o `:focus-visible` global.
+  teclado, leitor de tela, reduced motion — tem checklist no fim). Para painel
+  modal, use o `Sheet` de `@ui/design` (Escape, trap e retorno de foco,
+  `invisible` quando fechado) — não reimplemente. Nunca desabilitar zoom no
+  viewport nem remover o `:focus-visible` global.
+
+- **Design system — leia antes de escrever qualquer UI.** O reflexo natural de
+  escrever Tailwind idiomático (`text-sm`, `rounded-2xl`, `bg-white`) está
+  ERRADO neste projeto: ele fura a única camada que mantém dois apps
+  consistentes. `npm run lint` roda `scripts/check-design-system.mjs` e QUEBRA
+  se encontrar classe crua fora de `src/ui/design/`.
+
+  Antes de escrever uma tela: abra `src/ui/design/index.ts` (a lista do que
+  existe) e, se estiver com o app rodando, a rota `/design` (como cada coisa
+  se parece).
+
+  Tradução obrigatória — nunca escreva a coluna da esquerda:
+
+  | Em vez de | Use |
+  | --- | --- |
+  | `text-xs` / `text-[11px]` | `text-label` |
+  | `text-sm` | `text-body` |
+  | `text-lg` | `text-title` |
+  | `text-xl` | `text-metric` |
+  | `text-2xl` | `text-display` |
+  | `rounded-full` | `rounded-control` |
+  | `rounded-2xl` (input) | `rounded-field` |
+  | `rounded-2xl` (card) | `rounded-card` |
+  | `px-4` (margem de tela) | `px-gutter` |
+  | `<button>` estilizado na mão | `Button` / `IconButton` / `Chip` |
+  | `<input>`/`<textarea>` na mão | `Input` / `Textarea`, dentro de `Field` |
+  | `<div>` de card na mão | `Card` |
+  | modal/sheet na mão | `Sheet` |
+  | `flex h-full flex-col` + área rolável | `Screen` / `ScreenBody` |
+
+  Classe crua do Tailwind é permitida só para **layout local** (`flex`, `grid`,
+  `gap-*`, `mt-*`, `w-full`) — nunca para cor, raio, tipografia ou espaçamento
+  de tela.
+
+  Quando o caso não existir: adicione a **variante ao componente** em
+  `src/ui/design/`, exporte no `design/index.ts` e mostre em `/design`. Não
+  deixe a classe solta na tela e não crie um componente de UI fora de
+  `design/`. Cor nova entra como **primitivo** em `:root` e é referenciada por
+  um token semântico — nunca um hex direto no `@theme`. Para a exceção legítima e rara, comente `// ds-ok: <motivo>` na
+  linha — o check respeita, mas exige o motivo escrito.
+
+  Exceção única de i18n: `DesignScreen` é ferramenta de dev e mantém strings
+  inline — traduzir rótulo de vitrine só poluiria a tabela de mensagens.
 
 - Arquitetura "cérebro vs pele": nada em `src/core/` importa de `src/ui/` nem
   usa DOM. Aliases `@core/*`, `@ui/*`, `@app/*`.
