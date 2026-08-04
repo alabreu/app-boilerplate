@@ -44,7 +44,7 @@ a partir daqui já nasce com:
 | `vite.config.ts` | `APP_NAME`, `APP_DESCRIPTION`, `THEME_COLOR` (manifest PWA) |
 | `index.html` | `<title>`, `<meta name="description">`, `theme-color` |
 | `package.json` | `name` |
-| `src/index.css` | Valores dos tokens em `@theme` (mantenha os nomes semânticos) |
+| `src/index.css` | Valores dos **primitivos** em `:root` (`--palette-*`). Não mexa nos nomes semânticos do `@theme` — é a indireção que faz o tema escuro funcionar. Rode `npm run lint` depois: ele confere o contraste nos dois temas |
 | `public/` | Ícones: rode `npm run icons` para placeholders, troque pela arte real antes do lançamento |
 | `src/core/changelog.ts` | Substitua a entrada inicial |
 
