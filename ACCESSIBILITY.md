@@ -24,7 +24,8 @@ conforme; este documento existe para **toda feature nova continuar conforme**.
   `onClick` (eles não recebem foco nem Enter/Espaço).
 - Foco visível: o `:focus-visible` global em `index.css` cuida disso — não
   remova outlines sem repor algo equivalente.
-- Sheets/modais (padrão do `MenuSheet`, copie dele):
+- Sheets/modais: **use o `Sheet` de `@ui/design`**, não reimplemente. Ele já
+  garante o comportamento abaixo (e o `/design` deixa testar tudo isso à mão):
   - `Escape` fecha;
   - ao abrir, o foco entra no diálogo; ao fechar, **volta** para quem abriu;
   - Tab circula dentro (trap) enquanto aberto;

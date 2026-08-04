@@ -7,6 +7,7 @@
    contra bg/surface; texto grande e componentes de UI ≥ 3:1 (checar em
    webaim.org/resources/contrastchecker). Os valores abaixo já passam. */
 @theme {
+  /* --- Cor --- */
   --color-bg: #f7f6f3; /* fundo principal */
   --color-surface: #ffffff; /* cards / chips / sheets */
   --color-primary: #3f3f46; /* botões primários (10.3:1 com texto branco) */
@@ -15,6 +16,27 @@
   --color-muted: #52525b; /* texto secundário (6.6:1 no bg) */
   --color-success: #15803d; /* confirmações (4.5:1 no bg) */
   --color-danger: #b91c1c; /* erros (5.9:1 no bg) */
+
+  /* --- Raio: nomeado pelo PAPEL, não pelo tamanho. Trocar o visual do app é
+     mudar o valor aqui; nenhuma tela precisa saber que "card" virou 20px. --- */
+  --radius-control: 9999px; /* botões, chips */
+  --radius-field: 1rem; /* inputs, textareas */
+  --radius-card: 1rem; /* cards e blocos de conteúdo */
+  --radius-sheet: 1.5rem; /* bottom sheets */
+
+  /* --- Espaçamento: a margem lateral padrão das telas (px-gutter). --- */
+  --spacing-gutter: 1rem;
+
+  /* --- Escala tipográfica semântica. Use text-label/body/title/display no
+     lugar de text-xs/sm/lg crus, para o app inteiro escalar junto. --- */
+  --text-label: 0.6875rem; /* 11px: metadados, badges, headings de seção */
+  --text-label--line-height: 1rem;
+  --text-body: 0.875rem; /* 14px: corpo padrão */
+  --text-body--line-height: 1.25rem;
+  --text-title: 1.125rem; /* 18px: título dentro da tela */
+  --text-title--line-height: 1.5rem;
+  --text-display: 1.5rem; /* 24px: título da tela */
+  --text-display--line-height: 1.75rem;
 }
 
 html,

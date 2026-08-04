@@ -30,15 +30,29 @@ Supabase + Vercel). Extraído dos padrões do Tutor Brew
   do próprio usuário), precedência resolvida em runtime. A chave do operador é
   secret do servidor; NUNCA criar `VITE_OPENROUTER_API_KEY`. Cota atômica com
   limite por usuário + global na migração `0003`. Sem UI de chat de propósito.
+- Design system: tokens no `@theme` de `src/index.css` (cor, raio, espaçamento,
+  tipografia — nomeados por papel) + primitivos em `src/ui/design/` (`Button`,
+  `IconButton`, `Card`, `Chip`, `Field`/`Input`/`Textarea`, `SectionTitle`,
+  `Screen`/`ScreenBody`, `Sheet`). Vitrine viva em `/design` (lazy, sem link).
 - PWA + toast de atualização (`vite-plugin-pwa` modo prompt).
 
 ## Regras
 
 - Acessibilidade: toda feature nova segue `ACCESSIBILITY.md` (contraste AA,
-  teclado, leitor de tela, reduced motion — tem checklist no fim). O padrão de
-  sheet acessível para copiar é o `MenuSheet` (Escape, trap e retorno de foco,
-  `invisible` quando fechado). Nunca desabilitar zoom no viewport nem remover
-  o `:focus-visible` global.
+  teclado, leitor de tela, reduced motion — tem checklist no fim). Para painel
+  modal, use o `Sheet` de `@ui/design` (Escape, trap e retorno de foco,
+  `invisible` quando fechado) — não reimplemente. Nunca desabilitar zoom no
+  viewport nem remover o `:focus-visible` global.
+
+- Design system: UI nova COMPÕE os primitivos de `@ui/design`; tokens do
+  `@theme` no lugar de valores crus (`text-body` e não `text-sm`,
+  `rounded-card` e não `rounded-2xl`, `px-gutter` e não `px-4`). Classe crua do
+  Tailwind só para layout local (flex, grid, gap) ou quando o caso realmente não
+  existe — e aí a variante entra no primitivo, com comentário do porquê, em vez
+  de ficar solta na tela. Ao criar um primitivo novo, exporte-o no
+  `design/index.ts` e mostre-o em `/design`.
+  Exceção única de i18n: `DesignScreen` é ferramenta de dev e mantém strings
+  inline — traduzir rótulo de vitrine só poluiria a tabela de mensagens.
 
 - Arquitetura "cérebro vs pele": nada em `src/core/` importa de `src/ui/` nem
   usa DOM. Aliases `@core/*`, `@ui/*`, `@app/*`.

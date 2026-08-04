@@ -40,7 +40,7 @@ a partir daqui já nasce com:
 | `vite.config.ts` | `APP_NAME`, `APP_DESCRIPTION`, `THEME_COLOR` (manifest PWA) |
 | `index.html` | `<title>`, `<meta name="description">`, `theme-color` |
 | `package.json` | `name` |
-| `src/index.css` | Valores da paleta em `@theme` (mantenha os nomes semânticos) |
+| `src/index.css` | Valores dos tokens em `@theme` (mantenha os nomes semânticos) |
 | `public/` | Ícones: rode `npm run icons` para placeholders, troque pela arte real antes do lançamento |
 | `src/core/changelog.ts` | Substitua a entrada inicial |
 
@@ -169,6 +169,40 @@ usa a própria chave recebe um modelo diferente de quem usa o proxy.
 As cotas (40/usuário/dia, 2000 global) foram dimensionadas para um modelo caro.
 Com o V4 Flash a ordem de grandeza do custo é outra — dá bastante folga para
 subir os dois limites.
+
+## Design system
+
+Duas camadas, e a regra é sempre descer da primeira para a segunda:
+
+**1. Tokens** (`@theme` em `src/index.css`) — cor, raio, espaçamento e escala
+tipográfica, todos nomeados **pelo papel, não pelo tamanho**: `rounded-card`,
+`text-body`, `px-gutter`. Trocar a identidade visual de um app novo é mudar
+valor aqui; nenhuma tela precisa saber que "card" virou 20px.
+
+**2. Primitivos** (`src/ui/design/`) — os componentes que consomem os tokens:
+
+| Primitivo | Papel |
+| --- | --- |
+| `Button` / `buttonClasses` | 3 variantes × 2 tamanhos. A receita de classe é exportada à parte porque nem todo botão é um `<button>` (o link de doação é `<a>`) |
+| `IconButton` | Botão redondo só de ícone — `aria-label` obrigatório **no tipo** |
+| `Card` | Bloco sobre `surface`, com `padding` e `bordered` |
+| `Chip` | Opção de um grupo; já emite `aria-pressed` |
+| `Field` / `Input` / `Textarea` | `Field` gera o id e faz o `htmlFor` — rótulo ligado deixa de depender de memória |
+| `SectionTitle` | Rótulo de seção; `<h2>` por padrão, para a hierarquia de headings continuar navegável |
+| `Screen` / `ScreenBody` | Casca de tela (altura cheia + corpo rolável) |
+| `Sheet` | Bottom sheet acessível: Escape, trap e retorno de foco, `invisible` quando fechado |
+
+**A regra** (também no `CLAUDE.md`): tela nova compõe primitivos e usa tokens.
+Classe crua do Tailwind só para layout local (flex, grid, gap) ou quando o caso
+realmente não existe — e aí a variante entra no primitivo, com o porquê
+comentado, em vez de ficar solta na tela. O `UpdateToast` é o exemplo de exceção
+legítima e documentada: é o único botão sobre fundo escuro.
+
+**Vitrine em `/design`** — rota escondida e lazy (como `/admin`, sem link na
+UI): renderiza todos os tokens e primitivos numa página só. Use ao trocar a
+paleta de um app novo, para conferir contraste e anel de foco de uma vez, e
+antes de escrever classe crua, para ver o que já existe. É a única tela com
+strings fora do i18n: é ferramenta de dev, não produto.
 
 ## Arquitetura: "cérebro" vs "pele"
 
