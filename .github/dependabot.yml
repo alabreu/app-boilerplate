@@ -7,8 +7,31 @@ updates:
     schedule:
       interval: weekly
     groups:
+      # O React só funciona se os quatro pacotes subirem juntos: react e
+      # react-dom têm peer dependency um do outro, e cada @types/* exige a
+      # mesma major do seu pacote. Sem este grupo o Dependabot abre um PR só
+      # com react-dom e o `npm ci` quebra em ERESOLVE (foi o caso do #7).
+      # Sem `update-types` o grupo pega major também — que é justamente o
+      # caso que precisa vir junto.
+      react:
+        patterns:
+          - react
+          - react-dom
+          - '@types/react'
+          - '@types/react-dom'
       minor-and-patch:
         update-types: [minor, patch]
+    ignore:
+      # ESLint travado na v9: o eslint-plugin-jsx-a11y (que roda as regras de
+      # acessibilidade exigidas pelo ACCESSIBILITY.md) declara peer
+      # `eslint@^3 || ... || ^9` na 6.10.2, a última publicada. Qualquer major
+      # do eslint quebra o `npm ci`. Minor e patch da linha 9.x continuam
+      # passando normalmente.
+      # Remover estas duas entradas quando o jsx-a11y publicar suporte a v10+.
+      - dependency-name: eslint
+        update-types: ['version-update:semver-major']
+      - dependency-name: '@eslint/js'
+        update-types: ['version-update:semver-major']
   - package-ecosystem: github-actions
     directory: /
     schedule:
