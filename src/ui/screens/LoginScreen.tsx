@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { GoogleLogo, SignOut } from '@phosphor-icons/react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router'
 import { ScreenHeader } from '@ui/components/ScreenHeader'
 import { useAuth } from '@ui/hooks/useAuth'
 import { useTranslation } from '@ui/hooks/useTranslation'

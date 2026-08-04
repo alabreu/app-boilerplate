@@ -1,5 +1,5 @@
 import { CaretLeft } from '@phosphor-icons/react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router'
 import { useTranslation } from '@ui/hooks/useTranslation'
 
 /** Cabeçalho compartilhado das sub-telas: botão de voltar + título. */

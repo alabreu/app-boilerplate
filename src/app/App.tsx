@@ -1,5 +1,5 @@
 import { lazy, Suspense, useEffect } from 'react'
-import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router'
 import { trackSessionStart } from '@core/analytics'
 import { storageKey } from '@core/config'
 import { DEFAULT_LOCALE, normalizeLocale } from '@core/i18n'
