@@ -8,9 +8,9 @@
  * de build: roda no `npm run lint`, que o CI já executa e que o CLAUDE.md manda
  * rodar antes de todo commit.
  *
- * Escopo: `src/ui/`, exceto `src/ui/design/` — os primitivos são justamente o
- * lugar onde os valores crus PODEM aparecer, porque é lá que os tokens viram
- * componente.
+ * Escopo: `src/ui/`, exceto `src/ui/design/` — os COMPONENTES do design system
+ * são justamente o lugar onde os valores crus PODEM aparecer, porque é lá que os
+ * tokens semânticos viram componente.
  */
 import { readdirSync, readFileSync, statSync } from 'node:fs'
 import { join, relative } from 'node:path'
@@ -93,10 +93,10 @@ if (problems.length > 0) {
   }
   console.error(
     'Se o caso realmente não existe no design system, adicione a variante ao\n' +
-      'primitivo em src/ui/design/ (e mostre em /design) em vez de deixar a classe\n' +
+      'componente em src/ui/design/ (e mostre em /design) em vez de deixar a classe\n' +
       'solta. Para a exceção legítima e rara, comente `// ds-ok: <motivo>` na linha.\n',
   )
   process.exit(1)
 }
 
-console.log('✓ Design system: nenhuma classe crua fora dos primitivos.')
+console.log('✓ Design system: nenhuma classe crua fora dos componentes.')

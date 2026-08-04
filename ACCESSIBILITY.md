@@ -9,8 +9,10 @@ conforme; este documento existe para **toda feature nova continuar conforme**.
 - Texto normal: **≥ 4.5:1** contra o fundo em que aparece.
 - Texto grande (≥ 18.5px bold ou ≥ 24px) e componentes de UI (bordas de input,
   ícones informativos): **≥ 3:1**.
-- Os tokens de `src/index.css` já passam (os ratios estão comentados lá). Ao
-  trocar a paleta de um app novo, **recheque cada par** em
+- **Conferido automaticamente**: `npm run lint` roda `scripts/check-contrast.mjs`,
+  que resolve primitivo → semântico em cada tema e falha se algum par cair
+  abaixo do mínimo. Ao trocar a paleta de um app novo, rode o lint — ele cobre
+  os temas claro E escuro. Para conferir um par novo à mão:
   [webaim.org/resources/contrastchecker](https://webaim.org/resources/contrastchecker/).
 - Armadilhas comuns: texto `muted` com opacidade (`text-muted/70` quase sempre
   reprova), texto sobre foto (use overlay escuro por trás), estados

@@ -14,8 +14,9 @@ a partir daqui já nasce com:
   sessões/dia, inbox de feedback), gated por allowlist no banco
 - **Versão do build** (versão + sha + hora) no rodapé do menu — 5 toques abrem a
   referência do **design system** (`/design`); toque longo abre o `/admin`
-- **Design system** com tokens + primitivos, e um check no `npm run lint` que
-  quebra se aparecer classe crua do Tailwind fora dos primitivos
+- **Design system** em três camadas (primitivos → tokens semânticos →
+  componentes), com **tema claro/escuro** e dois checks no `npm run lint`:
+  classe crua fora dos componentes quebra, contraste abaixo de AA quebra
 - **PWA** com toast de "nova versão disponível"
 - **Acessibilidade AA de partida** (contraste conferido nos tokens, navegação
   por teclado nos sheets, leitores de tela, reduced motion) — regras e
@@ -196,14 +197,14 @@ valor aqui; nenhuma tela precisa saber que "card" virou 20px.
 | `Screen` / `ScreenBody` | Casca de tela (altura cheia + corpo rolável) |
 | `Sheet` | Bottom sheet acessível: Escape, trap e retorno de foco, `invisible` quando fechado |
 
-**A regra** (também no `CLAUDE.md`): tela nova compõe primitivos e usa tokens.
+**A regra** (também no `CLAUDE.md`): tela nova compõe componentes e usa tokens.
 Classe crua do Tailwind só para layout local (flex, grid, gap) ou quando o caso
-realmente não existe — e aí a variante entra no primitivo, com o porquê
+realmente não existe — e aí a variante entra no componente, com o porquê
 comentado, em vez de ficar solta na tela. O `UpdateToast` é o exemplo de exceção
 legítima e documentada: é o único botão sobre fundo escuro.
 
 **Vitrine em `/design`** — rota escondida e lazy (como `/admin`, sem link na
-UI): renderiza todos os tokens e primitivos numa página só. Abra com **5 toques
+UI): renderiza todos os tokens e componentes numa página só. Abra com **5 toques
 rápidos** no rótulo de versão no rodapé do menu (o mesmo gesto do Komme e do
 Tutor Brew) ou pela URL. Use ao trocar a
 paleta de um app novo, para conferir contraste e anel de foco de uma vez, e

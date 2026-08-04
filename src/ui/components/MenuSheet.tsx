@@ -80,7 +80,7 @@ export function MenuSheet({ open, onClose }: MenuSheetProps) {
                 {locale}
               </span>
             ) : item.to === '/novidades' && newsUnread > 0 ? (
-              <span className="ml-auto flex h-5 min-w-5 items-center justify-center rounded-control bg-accent px-1.5 text-label font-bold text-white">
+              <span className="ml-auto flex h-5 min-w-5 items-center justify-center rounded-control bg-accent px-1.5 text-label font-bold text-on-accent">
                 {newsUnread}
               </span>
             ) : (

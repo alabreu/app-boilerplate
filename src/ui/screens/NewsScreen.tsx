@@ -41,7 +41,7 @@ export function NewsScreen() {
                   <h2 className="flex items-center gap-2 font-bold leading-tight">
                     {entry.title[locale]}
                     {index < newCount && (
-                      <span className="rounded-control bg-accent px-2 py-0.5 text-label font-bold uppercase text-white">
+                      <span className="rounded-control bg-accent px-2 py-0.5 text-label font-bold uppercase text-on-accent">
                         {t('news.badgeNew')}
                       </span>
                     )}

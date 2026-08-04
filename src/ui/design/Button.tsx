@@ -13,7 +13,7 @@ export type ButtonVariant = 'primary' | 'secondary' | 'ghost'
 export type ButtonSize = 'sm' | 'md'
 
 const VARIANTS: Record<ButtonVariant, string> = {
-  primary: 'bg-primary text-white font-semibold',
+  primary: 'bg-primary text-on-primary font-semibold',
   secondary: 'bg-surface text-ink font-semibold ring-1 ring-ink/10',
   ghost: 'text-primary font-medium',
 }

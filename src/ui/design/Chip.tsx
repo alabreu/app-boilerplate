@@ -22,7 +22,7 @@ export function Chip({
       aria-pressed={selected}
       className={`rounded-control px-4 py-2 text-body font-semibold transition active:scale-95 ${
         selected
-          ? 'bg-primary text-white'
+          ? 'bg-primary text-on-primary'
           : 'bg-ink/5 text-ink ring-1 ring-ink/10'
       } ${className}`}
       {...rest}

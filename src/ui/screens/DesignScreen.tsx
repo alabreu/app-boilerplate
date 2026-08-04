@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Heart, PaperPlaneRight } from '@phosphor-icons/react'
 import {
   Button,
@@ -30,12 +30,17 @@ import { ScreenHeader } from '@ui/components/ScreenHeader'
 const TOKENS_COLOR = [
   { name: 'bg', use: 'fundo principal', swatch: 'bg-bg' },
   { name: 'surface', use: 'cards / sheets', swatch: 'bg-surface' },
-  { name: 'primary', use: 'ações primárias', swatch: 'bg-primary' },
-  { name: 'accent', use: 'badges e destaques', swatch: 'bg-accent' },
   { name: 'ink', use: 'texto', swatch: 'bg-ink' },
   { name: 'muted', use: 'texto secundário', swatch: 'bg-muted' },
+  { name: 'primary', use: 'ações primárias', swatch: 'bg-primary' },
+  { name: 'on-primary', use: 'texto sobre primary', swatch: 'bg-on-primary' },
+  { name: 'accent', use: 'badges e destaques', swatch: 'bg-accent' },
+  { name: 'on-accent', use: 'texto sobre accent', swatch: 'bg-on-accent' },
   { name: 'success', use: 'confirmações', swatch: 'bg-success' },
   { name: 'danger', use: 'erros', swatch: 'bg-danger' },
+  { name: 'inverse', use: 'toast (escuro nos 2 temas)', swatch: 'bg-inverse' },
+  { name: 'on-inverse', use: 'texto do toast', swatch: 'bg-on-inverse' },
+  { name: 'scrim', use: 'véu do sheet', swatch: 'bg-scrim' },
 ] as const
 
 const TOKENS_RADIUS = [
@@ -49,12 +54,32 @@ const TOKENS_TEXT = [
   { name: 'label', cls: 'text-label' },
   { name: 'body', cls: 'text-body' },
   { name: 'title', cls: 'text-title' },
+  { name: 'metric', cls: 'text-metric' },
   { name: 'display', cls: 'text-display' },
 ] as const
+
+type Theme = 'system' | 'light' | 'dark'
+
+/** Força o tema via `data-theme` no <html> — o mesmo gancho que um app usaria
+ *  para expor um seletor de tema ao usuário. `system` remove o atributo e
+ *  devolve o controle ao `prefers-color-scheme`. */
+function applyTheme(theme: Theme) {
+  const root = document.documentElement
+  if (theme === 'system') root.removeAttribute('data-theme')
+  else root.dataset.theme = theme
+}
 
 export function DesignScreen() {
   const [chip, setChip] = useState('a')
   const [sheetOpen, setSheetOpen] = useState(false)
+  const [theme, setTheme] = useState<Theme>('system')
+
+  // Só a vitrine mexe no tema; ao sair, devolve ao sistema para não vazar o
+  // estado de teste para o resto do app.
+  useEffect(() => {
+    applyTheme(theme)
+    return () => applyTheme('system')
+  }, [theme])
 
   return (
     <Screen>
@@ -62,10 +87,25 @@ export function DesignScreen() {
 
       <ScreenBody className="flex flex-col gap-6">
         <p className="text-body text-muted">
-          Todos os primitivos de <code>@ui/design</code> e os tokens do{' '}
+          Todos os componentes de <code>@ui/design</code> e os tokens do{' '}
           <code>@theme</code>. Navegue por teclado (Tab) para conferir o anel de
           foco em cada controle.
         </p>
+
+        <section>
+          <SectionTitle className="mb-2">Tema</SectionTitle>
+          <div className="flex flex-wrap gap-2">
+            {(['system', 'light', 'dark'] as const).map((t) => (
+              <Chip key={t} selected={theme === t} onClick={() => setTheme(t)}>
+                {t}
+              </Chip>
+            ))}
+          </div>
+          <p className="mt-2 text-label text-muted">
+            Alterne para conferir contraste e foco nos dois temas. Os contrastes
+            também são verificados no <code>npm run lint</code>.
+          </p>
+        </section>
 
         <section>
           <SectionTitle className="mb-2">Cor</SectionTitle>

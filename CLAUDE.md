@@ -20,7 +20,7 @@ Supabase + Vercel). Extraído dos padrões do Tutor Brew
   só aparece configurado. Upgrade para Checkout dinâmico: ver README.
 - Menu do topo direito: `ui/components/MenuSheet.tsx` — itens específicos do
   app entram no array `ITEMS`. Rodapé mostra versão + sha + hora do build
-  (`VersionLabel`); 5 toques abrem o `/admin`.
+  (`VersionLabel`); 5 toques abrem o `/design`, toque longo abre o `/admin`.
 - Painel de admin: `/admin` (lazy, sem link na UI), KPIs via RPCs
   `admin_metrics()`/`admin_feedback()` (security definer, allowlist
   `public.admins`). Eventos de uso: `core/analytics.ts` (`track()`,
@@ -30,10 +30,13 @@ Supabase + Vercel). Extraído dos padrões do Tutor Brew
   do próprio usuário), precedência resolvida em runtime. A chave do operador é
   secret do servidor; NUNCA criar `VITE_OPENROUTER_API_KEY`. Cota atômica com
   limite por usuário + global na migração `0003`. Sem UI de chat de propósito.
-- Design system: tokens no `@theme` de `src/index.css` (cor, raio, espaçamento,
-  tipografia — nomeados por papel) + primitivos em `src/ui/design/` (`Button`,
+- Design system em três camadas — **primitivos** (valores crus em `:root`,
+  `--palette-*`) → **tokens semânticos** (`@theme`, `--color-*`/`--radius-*`/
+  `--text-*`, nomeados por papel) → **componentes** (`src/ui/design/`: `Button`,
   `IconButton`, `Card`, `Chip`, `Field`/`Input`/`Textarea`, `SectionTitle`,
-  `Screen`/`ScreenBody`, `Sheet`). Vitrine viva em `/design` (lazy, sem link).
+  `Screen`/`ScreenBody`, `Sheet`). "Primitivo" aqui é token, nunca componente.
+  Tema claro/escuro repontando só a camada semântica. Vitrine viva em `/design`
+  (lazy, sem link), com alternador de tema.
 - PWA + toast de atualização (`vite-plugin-pwa` modo prompt).
 
 ## Regras
@@ -77,10 +80,11 @@ Supabase + Vercel). Extraído dos padrões do Tutor Brew
   `gap-*`, `mt-*`, `w-full`) — nunca para cor, raio, tipografia ou espaçamento
   de tela.
 
-  Quando o caso não existir: adicione a **variante ao primitivo** em
+  Quando o caso não existir: adicione a **variante ao componente** em
   `src/ui/design/`, exporte no `design/index.ts` e mostre em `/design`. Não
   deixe a classe solta na tela e não crie um componente de UI fora de
-  `design/`. Para a exceção legítima e rara, comente `// ds-ok: <motivo>` na
+  `design/`. Cor nova entra como **primitivo** em `:root` e é referenciada por
+  um token semântico — nunca um hex direto no `@theme`. Para a exceção legítima e rara, comente `// ds-ok: <motivo>` na
   linha — o check respeita, mas exige o motivo escrito.
 
   Exceção única de i18n: `DesignScreen` é ferramenta de dev e mantém strings

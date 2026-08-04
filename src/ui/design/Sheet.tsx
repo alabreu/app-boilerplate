@@ -89,7 +89,7 @@ export function Sheet({ open, onClose, label, children }: SheetProps) {
       <div
         aria-hidden="true"
         onClick={onClose}
-        className={`absolute inset-0 bg-ink/40 transition-opacity duration-200 ${
+        className={`absolute inset-0 bg-scrim/40 transition-opacity duration-200 ${
           open ? 'opacity-100' : 'opacity-0'
         }`}
       />
