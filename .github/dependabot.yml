@@ -19,6 +19,15 @@ updates:
           - react-dom
           - '@types/react'
           - '@types/react-dom'
+      # Mesmo caso do grupo react, com outro par: @vitejs/plugin-react@6 exige
+      # `vite@^8`, e o plugin-react@4 só aceita até `vite@^7`. Cada um sozinho
+      # quebra o `npm ci` (foi o caso dos #10 e #12). Os outros plugins de Vite
+      # do projeto — vite-plugin-pwa, @tailwindcss/vite, vitest — já aceitam a
+      # v8 numa faixa larga, então não precisam entrar no grupo.
+      vite:
+        patterns:
+          - vite
+          - '@vitejs/plugin-react'
       minor-and-patch:
         update-types: [minor, patch]
     ignore:
@@ -31,6 +40,13 @@ updates:
       - dependency-name: eslint
         update-types: ['version-update:semver-major']
       - dependency-name: '@eslint/js'
+        update-types: ['version-update:semver-major']
+      # TypeScript travado na linha 5: o typescript-eslint (que roda o lint dos
+      # arquivos .ts/.tsx) declara peer `typescript >=4.8.4 <6.1.0` na 8.66.0,
+      # a última publicada — ou seja, nenhuma versão dele aceita TS 7 ainda.
+      # Qualquer major do typescript quebra o `npm ci` (foi o caso do #11).
+      # Remover quando o typescript-eslint publicar suporte a TS 7.
+      - dependency-name: typescript
         update-types: ['version-update:semver-major']
   - package-ecosystem: github-actions
     directory: /
