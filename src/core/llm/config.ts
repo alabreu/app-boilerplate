@@ -10,10 +10,10 @@ export const LLM = {
    *
    * Mantenha em sincronia com o `defaultModel` da Edge Function
    * (supabase/functions/llm/index.ts), senão quem usa a própria chave recebe um
-   * modelo diferente de quem usa o proxy. Sem sufixo de versão: o ID sem versão
-   * é o alias que sempre aponta para a release mais recente da linha.
+   * modelo diferente de quem usa o proxy. O sufixo `-latest` é o que faz o
+   * OpenRouter redirecionar para a release mais nova da família V4 Flash.
    */
-  byokModel: 'deepseek/deepseek-chat',
+  byokModel: 'deepseek/deepseek-v4-flash-latest',
   maxTokens: 1024,
   maxMessages: 30,
   maxCharsPerMessage: 8000,

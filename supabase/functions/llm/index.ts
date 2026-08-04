@@ -24,16 +24,19 @@ const CONFIG = {
    *  Para trocar de modelo, mexa AQUI (e no `byokModel` de core/llm/config.ts),
    *  nunca aceitando o `model` que o cliente mandar.
    *
-   *  Alternativas comuns, se o produto pedir mais capacidade:
+   *  Alternativas, se o produto pedir mais capacidade:
    *    'anthropic/claude-opus-5'   — o mais capaz, e o mais caro
-   *    'anthropic/claude-sonnet-5' — meio-termo
-   *    'deepseek/deepseek-r1'      — a linha de raciocínio da DeepSeek */
-  allowedModels: ['deepseek/deepseek-chat'],
-  /** O modelo que roda de fato. Sem sufixo de versão de propósito: no
-   *  OpenRouter o ID sem versão é um alias que sempre aponta para a release
-   *  mais recente daquela linha — é o que mantém "sempre o mais recente" sem
-   *  precisar editar este arquivo a cada release da DeepSeek. */
-  defaultModel: 'deepseek/deepseek-chat',
+   *    'anthropic/claude-sonnet-5' — meio-termo */
+  allowedModels: ['deepseek/deepseek-v4-flash-latest'],
+  /** O modelo que roda de fato: o "Latest" da família V4 Flash, que o próprio
+   *  OpenRouter redireciona para a release mais nova da linha. Assim o template
+   *  acompanha os lançamentos da DeepSeek sem ninguém editar este arquivo.
+   *
+   *  O custo é a outra face: o comportamento pode mudar sob os seus pés numa
+   *  release nova. Se algum app precisar de saída reproduzível, troque por uma
+   *  versão fixa da família (ex.: 'deepseek/deepseek-v4-flash-0731') e assuma
+   *  a atualização manual. */
+  defaultModel: 'deepseek/deepseek-v4-flash-latest',
   /** Prompt de sistema do produto (persona, regras). Vazio = sem system. */
   systemPrompt: '',
   dailyLimitPerUser: 40,

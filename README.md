@@ -154,14 +154,21 @@ Para adaptar ao seu produto, mexa no bloco `CONFIG` no topo de
 limites de tamanho. O template não traz UI de chat — isso é produto, não
 boilerplate.
 
-**Modelo padrão: `deepseek/deepseek-chat`** — a linha de chat da DeepSeek, sem
-sufixo de versão de propósito: no OpenRouter o ID sem versão é o alias que
-sempre aponta para a release mais recente daquela linha, então você não precisa
-editar o código a cada lançamento. Trocar de modelo é uma linha em dois lugares:
-`defaultModel` (Edge Function) e `byokModel` (`core/llm/config.ts`) — mantenha os
-dois em sincronia, senão quem usa a própria chave recebe um modelo diferente de
-quem usa o proxy. As cotas (40/usuário/dia, 2000 global) foram dimensionadas
-para um modelo caro; com a DeepSeek dá folga para subir bastante.
+**Modelo padrão: `deepseek/deepseek-v4-flash-latest`** — o "Latest" da família
+DeepSeek V4 Flash, que o próprio OpenRouter redireciona para a release mais nova
+da linha. O template acompanha os lançamentos da DeepSeek sem ninguém editar
+código. O custo é a outra face: o comportamento pode mudar numa release nova, e
+se algum app precisar de saída reproduzível o certo é fixar uma versão da
+família (`deepseek/deepseek-v4-flash-0731`, por exemplo) e assumir a atualização
+manual.
+
+Trocar de modelo é uma linha em dois lugares: `defaultModel` (Edge Function) e
+`byokModel` (`core/llm/config.ts`) — mantenha os dois em sincronia, senão quem
+usa a própria chave recebe um modelo diferente de quem usa o proxy.
+
+As cotas (40/usuário/dia, 2000 global) foram dimensionadas para um modelo caro.
+Com o V4 Flash a ordem de grandeza do custo é outra — dá bastante folga para
+subir os dois limites.
 
 ## Arquitetura: "cérebro" vs "pele"
 
