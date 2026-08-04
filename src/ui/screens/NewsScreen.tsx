@@ -34,14 +34,14 @@ export function NewsScreen() {
           {CHANGELOG.map((entry, index) => (
             <Card key={entry.id} as="article" padding="md" className="shadow-sm">
               <div className="mb-2 flex items-center gap-3">
-                <span className="text-2xl" aria-hidden>
+                <span className="text-display" aria-hidden>
                   {entry.emoji}
                 </span>
                 <div>
                   <h2 className="flex items-center gap-2 font-bold leading-tight">
                     {entry.title[locale]}
                     {index < newCount && (
-                      <span className="rounded-control bg-accent px-2 py-0.5 text-[10px] font-bold uppercase text-white">
+                      <span className="rounded-control bg-accent px-2 py-0.5 text-label font-bold uppercase text-white">
                         {t('news.badgeNew')}
                       </span>
                     )}

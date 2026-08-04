@@ -12,7 +12,10 @@ a partir daqui já nasce com:
 - **Botão no topo direito** que abre um sheet com tudo isso (extensível por app)
 - **Painel de admin** escondido em `/admin` (KPIs: usuários, DAU/WAU/MAU,
   sessões/dia, inbox de feedback), gated por allowlist no banco
-- **Versão do build** (versão + sha + hora) no rodapé do menu — 5 toques abrem o `/admin`
+- **Versão do build** (versão + sha + hora) no rodapé do menu — 5 toques abrem a
+  referência do **design system** (`/design`); toque longo abre o `/admin`
+- **Design system** com tokens + primitivos, e um check no `npm run lint` que
+  quebra se aparecer classe crua do Tailwind fora dos primitivos
 - **PWA** com toast de "nova versão disponível"
 - **Acessibilidade AA de partida** (contraste conferido nos tokens, navegação
   por teclado nos sheets, leitores de tela, reduced motion) — regras e
@@ -83,9 +86,10 @@ do Stripe vive **só** como secret da Edge Function, nunca no código.
 
 ### Painel de admin e KPIs
 
-- Rota `/admin`, **sem link na UI**: acesse pela URL ou tocando **5 vezes** no
-  rótulo de versão no rodapé do menu. O código é lazy-loaded — não entra no
-  bundle de quem nunca abre.
+- Rota `/admin`, **sem link na UI**: acesse pela URL ou com um **toque longo**
+  (~0,6s) no rótulo de versão no rodapé do menu. O código é lazy-loaded — não
+  entra no bundle de quem nunca abre.
+  (Os 5 toques rápidos no mesmo rótulo abrem o `/design` — ver Design system.)
 - A segurança real está no banco, não na UI: as RPCs `admin_metrics()` e
   `admin_feedback()` são `security definer` e negam quem não está na tabela
   `public.admins` (que não tem policies — só o SQL Editor mexe nela).
@@ -199,7 +203,9 @@ comentado, em vez de ficar solta na tela. O `UpdateToast` é o exemplo de exceç
 legítima e documentada: é o único botão sobre fundo escuro.
 
 **Vitrine em `/design`** — rota escondida e lazy (como `/admin`, sem link na
-UI): renderiza todos os tokens e primitivos numa página só. Use ao trocar a
+UI): renderiza todos os tokens e primitivos numa página só. Abra com **5 toques
+rápidos** no rótulo de versão no rodapé do menu (o mesmo gesto do Komme e do
+Tutor Brew) ou pela URL. Use ao trocar a
 paleta de um app novo, para conferir contraste e anel de foco de uma vez, e
 antes de escrever classe crua, para ver o que já existe. É a única tela com
 strings fora do i18n: é ferramenta de dev, não produto.

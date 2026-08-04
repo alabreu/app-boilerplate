@@ -37,7 +37,16 @@ export function Sheet({ open, onClose, label, children }: SheetProps) {
   useEffect(() => {
     if (!open) return
     returnFocusRef.current = document.activeElement as HTMLElement | null
-    dialogRef.current?.querySelector<HTMLElement>('button')?.focus()
+
+    // O foco entra no PRÓXIMO frame, não neste. O container sai de `invisible`
+    // para `visible` com `transition-[visibility]`: no instante em que o effect
+    // roda, a visibility computada ainda é `hidden`, e `.focus()` em elemento
+    // invisível é no-op silencioso — o foco ficava no botão que abriu o sheet.
+    let raf = requestAnimationFrame(() => {
+      raf = requestAnimationFrame(() => {
+        dialogRef.current?.querySelector<HTMLElement>('button')?.focus()
+      })
+    })
 
     function onKeyDown(e: KeyboardEvent) {
       if (e.key === 'Escape') {
@@ -63,6 +72,7 @@ export function Sheet({ open, onClose, label, children }: SheetProps) {
 
     document.addEventListener('keydown', onKeyDown)
     return () => {
+      cancelAnimationFrame(raf)
       document.removeEventListener('keydown', onKeyDown)
       returnFocusRef.current?.focus()
     }

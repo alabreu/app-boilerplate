@@ -44,13 +44,45 @@ Supabase + Vercel). Extraído dos padrões do Tutor Brew
   `invisible` quando fechado) — não reimplemente. Nunca desabilitar zoom no
   viewport nem remover o `:focus-visible` global.
 
-- Design system: UI nova COMPÕE os primitivos de `@ui/design`; tokens do
-  `@theme` no lugar de valores crus (`text-body` e não `text-sm`,
-  `rounded-card` e não `rounded-2xl`, `px-gutter` e não `px-4`). Classe crua do
-  Tailwind só para layout local (flex, grid, gap) ou quando o caso realmente não
-  existe — e aí a variante entra no primitivo, com comentário do porquê, em vez
-  de ficar solta na tela. Ao criar um primitivo novo, exporte-o no
-  `design/index.ts` e mostre-o em `/design`.
+- **Design system — leia antes de escrever qualquer UI.** O reflexo natural de
+  escrever Tailwind idiomático (`text-sm`, `rounded-2xl`, `bg-white`) está
+  ERRADO neste projeto: ele fura a única camada que mantém dois apps
+  consistentes. `npm run lint` roda `scripts/check-design-system.mjs` e QUEBRA
+  se encontrar classe crua fora de `src/ui/design/`.
+
+  Antes de escrever uma tela: abra `src/ui/design/index.ts` (a lista do que
+  existe) e, se estiver com o app rodando, a rota `/design` (como cada coisa
+  se parece).
+
+  Tradução obrigatória — nunca escreva a coluna da esquerda:
+
+  | Em vez de | Use |
+  | --- | --- |
+  | `text-xs` / `text-[11px]` | `text-label` |
+  | `text-sm` | `text-body` |
+  | `text-lg` | `text-title` |
+  | `text-xl` | `text-metric` |
+  | `text-2xl` | `text-display` |
+  | `rounded-full` | `rounded-control` |
+  | `rounded-2xl` (input) | `rounded-field` |
+  | `rounded-2xl` (card) | `rounded-card` |
+  | `px-4` (margem de tela) | `px-gutter` |
+  | `<button>` estilizado na mão | `Button` / `IconButton` / `Chip` |
+  | `<input>`/`<textarea>` na mão | `Input` / `Textarea`, dentro de `Field` |
+  | `<div>` de card na mão | `Card` |
+  | modal/sheet na mão | `Sheet` |
+  | `flex h-full flex-col` + área rolável | `Screen` / `ScreenBody` |
+
+  Classe crua do Tailwind é permitida só para **layout local** (`flex`, `grid`,
+  `gap-*`, `mt-*`, `w-full`) — nunca para cor, raio, tipografia ou espaçamento
+  de tela.
+
+  Quando o caso não existir: adicione a **variante ao primitivo** em
+  `src/ui/design/`, exporte no `design/index.ts` e mostre em `/design`. Não
+  deixe a classe solta na tela e não crie um componente de UI fora de
+  `design/`. Para a exceção legítima e rara, comente `// ds-ok: <motivo>` na
+  linha — o check respeita, mas exige o motivo escrito.
+
   Exceção única de i18n: `DesignScreen` é ferramenta de dev e mantém strings
   inline — traduzir rótulo de vitrine só poluiria a tabela de mensagens.
 

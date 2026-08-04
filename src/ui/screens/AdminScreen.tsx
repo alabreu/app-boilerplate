@@ -88,7 +88,7 @@ export function AdminScreen() {
               <div className="grid grid-cols-3 gap-2">
                 {tiles.map((tile) => (
                   <Card key={tile.label} className="text-center">
-                    <p className="text-xl font-extrabold">{tile.value}</p>
+                    <p className="text-metric font-extrabold">{tile.value}</p>
                     <p className="text-label uppercase tracking-wide text-muted">
                       {tile.label}
                     </p>
