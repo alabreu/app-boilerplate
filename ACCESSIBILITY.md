@@ -74,7 +74,12 @@ Antes de commitar uma tela/componente novo:
    aparecem?
 3. Botões só-ícone têm `aria-label`? Estados visuais têm `aria-pressed`/
    `role="status"`/texto equivalente?
-4. Formulário novo tem labels e erros em texto?
+4. Formulário novo tem labels e erros em texto, e os campos vêm do
+   `Input`/`Textarea` de `@ui/design`? Campo na mão costuma nascer com fonte
+   menor que 16px, e aí o Safari do iOS dá zoom ao focar — o `npm run lint`
+   reprova campo cru justamente por isso. A correção NUNCA é `user-scalable=no`
+   no viewport: isso conserta o zoom automático tirando o zoom de quem depende
+   dele para enxergar (WCAG 1.4.4).
 5. Rodou o **Lighthouse** (aba Accessibility) ou a extensão
    [axe DevTools](https://www.deque.com/axe/devtools/) na tela nova? Zere os
    erros apontados — eles pegam ~40% dos problemas; o checklist acima cobre o

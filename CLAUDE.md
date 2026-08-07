@@ -71,7 +71,7 @@ Supabase + Vercel). Extraído dos padrões do Tutor Brew
   | `rounded-2xl` (card) | `rounded-card` |
   | `px-4` (margem de tela) | `px-gutter` |
   | `<button>` estilizado na mão | `Button` / `IconButton` / `Chip` |
-  | `<input>`/`<textarea>` na mão | `Input` / `Textarea`, dentro de `Field` |
+  | `<input>`/`<textarea>` na mão | `Input` / `Textarea`, dentro de `Field` (o check reprova campo cru: fonte menor que 16px faz o iOS dar zoom ao focar) |
   | `<div>` de card na mão | `Card` |
   | modal/sheet na mão | `Sheet` |
   | `flex h-full flex-col` + área rolável | `Screen` / `ScreenBody` |

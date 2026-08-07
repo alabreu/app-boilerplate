@@ -42,6 +42,18 @@ const RULES = [
     pattern: /\brounded(-[trbl][lr]?)?-\[[^\]]*\]/g,
     fix: 'valor mágico de raio: use um token de raio, ou adicione um novo ao @theme',
   },
+  {
+    // Campo de formulário escrito na mão. Esta regra é sobre ACESSIBILIDADE,
+    // não sobre estética: o Safari do iOS dá zoom ao focar qualquer campo com
+    // fonte menor que 16px, e um <input> solto quase sempre nasce com a escala
+    // idiomática do Tailwind (text-sm = 14px). O Input/Textarea do design
+    // system já carrega o token `text-input` (16px), que é o que impede o zoom
+    // sem precisar de `user-scalable=no` no viewport (proibido — WCAG 1.4.4).
+    // Field ainda amarra o <label> ao controle de quebra, que é a falha de
+    // acessibilidade mais comum em formulário.
+    pattern: /<(input|textarea|select)\b/g,
+    fix: 'campo na mão: use Input/Textarea de @ui/design dentro de Field — eles trazem o tamanho que impede o zoom do iOS e o vínculo com o rótulo',
+  },
 ]
 
 /** Escapes conscientes: `// ds-ok: <motivo>` na mesma linha ou na anterior.
