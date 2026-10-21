@@ -44,6 +44,8 @@ export default defineConfig({
     react(),
     tailwindcss(),
     VitePWA({
+      // `VITE_NO_PWA=1` gera um build estático sem service worker (artifact/preview).
+      disable: process.env.VITE_NO_PWA === '1',
       registerType: 'prompt',
       includeAssets: ['favicon.svg', 'apple-touch-icon.png'],
       manifest: {

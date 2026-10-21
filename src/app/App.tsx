@@ -1,5 +1,5 @@
 import { lazy, Suspense, useEffect } from 'react'
-import { BrowserRouter, Navigate, Route, Routes } from 'react-router'
+import { BrowserRouter, HashRouter, Navigate, Route, Routes } from 'react-router'
 import { trackSessionStart } from '@core/analytics'
 import { storageKey } from '@core/config'
 import { DEFAULT_LOCALE, normalizeLocale } from '@core/i18n'
@@ -30,6 +30,10 @@ const DesignScreen = lazy(() =>
  * As rotas comuns (feedback, idioma, novidades, login) já vêm prontas —
  * adicione as do seu produto ao lado delas.
  */
+// Build hospedado em caminho que não é a raiz (ex.: página estática/artifact):
+// `VITE_HASH_ROUTER=1` troca para rotas por hash, sem depender de rewrite.
+const Router = import.meta.env.VITE_HASH_ROUTER === '1' ? HashRouter : BrowserRouter
+
 export function App() {
   const { locale } = useTranslation()
   const setLocale = useLocaleStore((s) => s.setLocale)
@@ -69,7 +73,7 @@ export function App() {
   }, [locale])
 
   return (
-    <BrowserRouter>
+    <Router>
       <div className="mx-auto h-dvh max-w-md overflow-hidden">
         <Routes>
           <Route path="/" element={<GameScreen />} />
@@ -98,6 +102,6 @@ export function App() {
         </Routes>
       </div>
       <UpdateToast />
-    </BrowserRouter>
+    </Router>
   )
 }
