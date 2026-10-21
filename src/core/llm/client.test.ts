@@ -30,7 +30,7 @@ describe('chave BYOK', () => {
   it('grava e apaga sob o prefixo do app', () => {
     setUserKey('sk-or-v1-exemplo')
     expect(getUserKey()).toBe('sk-or-v1-exemplo')
-    expect(store.has('meu-app.llm-key')).toBe(true)
+    expect(store.has('fissura.llm-key')).toBe(true)
 
     setUserKey(null)
     expect(getUserKey()).toBeNull()

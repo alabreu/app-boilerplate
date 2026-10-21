@@ -9,7 +9,7 @@ import { useAuthInit } from '@ui/hooks/useAuth'
 import { useTranslation } from '@ui/hooks/useTranslation'
 import { DonateScreen } from '@ui/screens/DonateScreen'
 import { FeedbackScreen } from '@ui/screens/FeedbackScreen'
-import { HomeScreen } from '@ui/screens/HomeScreen'
+import { GameScreen } from '@ui/screens/GameScreen'
 import { LanguageScreen } from '@ui/screens/LanguageScreen'
 import { LoginScreen } from '@ui/screens/LoginScreen'
 import { NewsScreen } from '@ui/screens/NewsScreen'
@@ -72,7 +72,7 @@ export function App() {
     <BrowserRouter>
       <div className="mx-auto h-dvh max-w-md overflow-hidden">
         <Routes>
-          <Route path="/" element={<HomeScreen />} />
+          <Route path="/" element={<GameScreen />} />
           <Route path="/feedback" element={<FeedbackScreen />} />
           <Route path="/idioma" element={<LanguageScreen />} />
           <Route path="/novidades" element={<NewsScreen />} />

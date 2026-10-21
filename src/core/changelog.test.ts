@@ -28,7 +28,7 @@ describe('changelog não lido', () => {
   })
 
   it('id desconhecido no storage conta tudo como não lido', () => {
-    store.set('meu-app.changelog-last-seen', 'id-que-nao-existe')
+    store.set('fissura.changelog-last-seen', 'id-que-nao-existe')
     expect(getUnreadCount()).toBe(CHANGELOG.length)
   })
 })

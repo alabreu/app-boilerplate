@@ -1,3 +1,12 @@
+# Fissura (POC) — sobre o app-boilerplate
+
+**O jogo:** POC de coleta por toque + automação + defesa + merge, em pixel
+art, para celular. Como testar, capturas, decisões e avaliação em
+[`docs/POC.md`](./docs/POC.md). O resto deste README descreve o template
+em que o jogo foi construído.
+
+---
+
 # app-boilerplate
 
 Ponto de partida para apps novos (React + Vite + TS + Tailwind v4 + Supabase +
@@ -38,15 +47,15 @@ a partir daqui já nasce com:
 
 ### Checklist de renomeação
 
-| Onde | O quê |
-| --- | --- |
-| `src/core/config.ts` | `APP_NAME` e `STORAGE_PREFIX` (slug do app) |
-| `vite.config.ts` | `APP_NAME`, `APP_DESCRIPTION`, `THEME_COLOR` (manifest PWA) |
-| `index.html` | `<title>`, `<meta name="description">`, `theme-color` |
-| `package.json` | `name` |
-| `src/index.css` | Valores dos **primitivos** em `:root` (`--palette-*`). Não mexa nos nomes semânticos do `@theme` — é a indireção que faz o tema escuro funcionar. Rode `npm run lint` depois: ele confere o contraste nos dois temas |
-| `public/` | Ícones: rode `npm run icons` para placeholders, troque pela arte real antes do lançamento |
-| `src/core/changelog.ts` | Substitua a entrada inicial |
+| Onde                    | O quê                                                                                                                                                                                                                |
+| ----------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `src/core/config.ts`    | `APP_NAME` e `STORAGE_PREFIX` (slug do app)                                                                                                                                                                          |
+| `vite.config.ts`        | `APP_NAME`, `APP_DESCRIPTION`, `THEME_COLOR` (manifest PWA)                                                                                                                                                          |
+| `index.html`            | `<title>`, `<meta name="description">`, `theme-color`                                                                                                                                                                |
+| `package.json`          | `name`                                                                                                                                                                                                               |
+| `src/index.css`         | Valores dos **primitivos** em `:root` (`--palette-*`). Não mexa nos nomes semânticos do `@theme` — é a indireção que faz o tema escuro funcionar. Rode `npm run lint` depois: ele confere o contraste nos dois temas |
+| `public/`               | Ícones: rode `npm run icons` para placeholders, troque pela arte real antes do lançamento                                                                                                                            |
+| `src/core/changelog.ts` | Substitua a entrada inicial                                                                                                                                                                                          |
 
 ### Setup do Supabase (quando for ligar login/nuvem)
 
@@ -109,10 +118,10 @@ do Stripe vive **só** como secret da Edge Function, nunca no código.
 Dois modos atrás de **uma única interface de streaming** (`core/llm/client.ts`).
 Quem chama não sabe qual está ativo — só recebe tokens via `streamChat()`.
 
-| Modo | Chave de quem | Quem paga | Quando vale |
-| --- | --- | --- | --- |
-| `proxy` | sua, secret no servidor | você | o caso comum: usuário logado, com cota |
-| `byok` | do próprio usuário, no localStorage dele | ele | power user que quer escapar do rate limit |
+| Modo    | Chave de quem                            | Quem paga | Quando vale                               |
+| ------- | ---------------------------------------- | --------- | ----------------------------------------- |
+| `proxy` | sua, secret no servidor                  | você      | o caso comum: usuário logado, com cota    |
+| `byok`  | do próprio usuário, no localStorage dele | ele       | power user que quer escapar do rate limit |
 
 A precedência é resolvida em **runtime**, não em build-time: chave própria →
 sessão válida → indisponível. Ou seja, quem cola a própria chave não consome sua
@@ -186,16 +195,16 @@ valor aqui; nenhuma tela precisa saber que "card" virou 20px.
 
 **2. Primitivos** (`src/ui/design/`) — os componentes que consomem os tokens:
 
-| Primitivo | Papel |
-| --- | --- |
-| `Button` / `buttonClasses` | 3 variantes × 2 tamanhos. A receita de classe é exportada à parte porque nem todo botão é um `<button>` (o link de doação é `<a>`) |
-| `IconButton` | Botão redondo só de ícone — `aria-label` obrigatório **no tipo** |
-| `Card` | Bloco sobre `surface`, com `padding` e `bordered` |
-| `Chip` | Opção de um grupo; já emite `aria-pressed` |
-| `Field` / `Input` / `Textarea` | `Field` gera o id e faz o `htmlFor` — rótulo ligado deixa de depender de memória |
-| `SectionTitle` | Rótulo de seção; `<h2>` por padrão, para a hierarquia de headings continuar navegável |
-| `Screen` / `ScreenBody` | Casca de tela (altura cheia + corpo rolável) |
-| `Sheet` | Bottom sheet acessível: Escape, trap e retorno de foco, `invisible` quando fechado |
+| Primitivo                      | Papel                                                                                                                              |
+| ------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------- |
+| `Button` / `buttonClasses`     | 3 variantes × 2 tamanhos. A receita de classe é exportada à parte porque nem todo botão é um `<button>` (o link de doação é `<a>`) |
+| `IconButton`                   | Botão redondo só de ícone — `aria-label` obrigatório **no tipo**                                                                   |
+| `Card`                         | Bloco sobre `surface`, com `padding` e `bordered`                                                                                  |
+| `Chip`                         | Opção de um grupo; já emite `aria-pressed`                                                                                         |
+| `Field` / `Input` / `Textarea` | `Field` gera o id e faz o `htmlFor` — rótulo ligado deixa de depender de memória                                                   |
+| `SectionTitle`                 | Rótulo de seção; `<h2>` por padrão, para a hierarquia de headings continuar navegável                                              |
+| `Screen` / `ScreenBody`        | Casca de tela (altura cheia + corpo rolável)                                                                                       |
+| `Sheet`                        | Bottom sheet acessível: Escape, trap e retorno de foco, `invisible` quando fechado                                                 |
 
 **A regra** (também no `CLAUDE.md`): tela nova compõe componentes e usa tokens.
 Classe crua do Tailwind só para layout local (flex, grid, gap) ou quando o caso
@@ -237,13 +246,13 @@ de segurança alto com ~zero ops), migrando para AWS completa **quando um app
 estiver validado** e justificar operação dedicada. O código já está preparado —
 o provedor fica atrás de costuras únicas:
 
-| Peça | Hoje | Na AWS | Onde trocar |
-| --- | --- | --- | --- |
-| Cliente backend | Supabase JS | API Gateway + Lambda (ou AppSync) | `core/backend/client.ts` |
-| Auth | Supabase Auth | Cognito (via `amazon-cognito-identity-js` / Amplify Auth) | `core/auth/client.ts` (a UI só vê `AuthUser`) |
-| Banco | Postgres (Supabase) | RDS/Aurora Postgres — as migrações SQL em `supabase/migrations/` são Postgres puro e portam direto | `supabase/migrations/` |
-| Regras por usuário | RLS (`auth.uid()`) | Lambda valida o JWT do Cognito e filtra por `user_id` | camada de dados em `core/` |
-| Hosting | Vercel | S3 + CloudFront (+ CDK para IaC) | `vercel.json` → stack CDK |
+| Peça               | Hoje                | Na AWS                                                                                             | Onde trocar                                   |
+| ------------------ | ------------------- | -------------------------------------------------------------------------------------------------- | --------------------------------------------- |
+| Cliente backend    | Supabase JS         | API Gateway + Lambda (ou AppSync)                                                                  | `core/backend/client.ts`                      |
+| Auth               | Supabase Auth       | Cognito (via `amazon-cognito-identity-js` / Amplify Auth)                                          | `core/auth/client.ts` (a UI só vê `AuthUser`) |
+| Banco              | Postgres (Supabase) | RDS/Aurora Postgres — as migrações SQL em `supabase/migrations/` são Postgres puro e portam direto | `supabase/migrations/`                        |
+| Regras por usuário | RLS (`auth.uid()`)  | Lambda valida o JWT do Cognito e filtra por `user_id`                                              | camada de dados em `core/`                    |
+| Hosting            | Vercel              | S3 + CloudFront (+ CDK para IaC)                                                                   | `vercel.json` → stack CDK                     |
 
 O que **não** muda na migração: `ui/` inteira, `core/i18n`, `core/changelog`,
 stores, telas. O que muda fica confinado a `core/backend`, `core/auth` e ao

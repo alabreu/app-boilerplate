@@ -39,6 +39,19 @@ Supabase + Vercel). Extraído dos padrões do Tutor Brew
   (lazy, sem link), com alternador de tema.
 - PWA + toast de atualização (`vite-plugin-pwa` modo prompt).
 
+## O jogo (Fissura)
+
+- Cérebro em `src/core/game/` (sem DOM): `balance.ts` (todos os números),
+  `map.ts` (geração determinística por seed), `game.ts` (classe `Game`:
+  ações `tapAt`/`buyCollector`/`startPlacing`/`explore` + `tick(dt)`).
+  Testes em `game.test.ts` cobrem coleta, automação, merge e hordas.
+- Pele em `src/ui/game/`: sprites em texto (`sprites.ts`, uma letra por cor
+  de `palette.ts`), `renderer.ts` (canvas, pixels nítidos, ordem por `y`),
+  `camera.ts`/`input.ts` (toque × arrasto), `GameCanvas.tsx` (loop) e
+  `GameHud.tsx` (DOM, só componentes do design system). Como testar e as
+  decisões: `docs/POC.md`.
+- Toda string do HUD passa pelo i18n (`game.*`, `hint.*`, `region.*`).
+
 ## Regras
 
 - Acessibilidade: toda feature nova segue `ACCESSIBILITY.md` (contraste AA,
@@ -59,22 +72,22 @@ Supabase + Vercel). Extraído dos padrões do Tutor Brew
 
   Tradução obrigatória — nunca escreva a coluna da esquerda:
 
-  | Em vez de | Use |
-  | --- | --- |
-  | `text-xs` / `text-[11px]` | `text-label` |
-  | `text-sm` | `text-body` |
-  | `text-lg` | `text-title` |
-  | `text-xl` | `text-metric` |
-  | `text-2xl` | `text-display` |
-  | `rounded-full` | `rounded-control` |
-  | `rounded-2xl` (input) | `rounded-field` |
-  | `rounded-2xl` (card) | `rounded-card` |
-  | `px-4` (margem de tela) | `px-gutter` |
-  | `<button>` estilizado na mão | `Button` / `IconButton` / `Chip` |
-  | `<input>`/`<textarea>` na mão | `Input` / `Textarea`, dentro de `Field` (o check reprova campo cru: fonte menor que 16px faz o iOS dar zoom ao focar) |
-  | `<div>` de card na mão | `Card` |
-  | modal/sheet na mão | `Sheet` |
-  | `flex h-full flex-col` + área rolável | `Screen` / `ScreenBody` |
+  | Em vez de                             | Use                                                                                                                   |
+  | ------------------------------------- | --------------------------------------------------------------------------------------------------------------------- |
+  | `text-xs` / `text-[11px]`             | `text-label`                                                                                                          |
+  | `text-sm`                             | `text-body`                                                                                                           |
+  | `text-lg`                             | `text-title`                                                                                                          |
+  | `text-xl`                             | `text-metric`                                                                                                         |
+  | `text-2xl`                            | `text-display`                                                                                                        |
+  | `rounded-full`                        | `rounded-control`                                                                                                     |
+  | `rounded-2xl` (input)                 | `rounded-field`                                                                                                       |
+  | `rounded-2xl` (card)                  | `rounded-card`                                                                                                        |
+  | `px-4` (margem de tela)               | `px-gutter`                                                                                                           |
+  | `<button>` estilizado na mão          | `Button` / `IconButton` / `Chip`                                                                                      |
+  | `<input>`/`<textarea>` na mão         | `Input` / `Textarea`, dentro de `Field` (o check reprova campo cru: fonte menor que 16px faz o iOS dar zoom ao focar) |
+  | `<div>` de card na mão                | `Card`                                                                                                                |
+  | modal/sheet na mão                    | `Sheet`                                                                                                               |
+  | `flex h-full flex-col` + área rolável | `Screen` / `ScreenBody`                                                                                               |
 
   Classe crua do Tailwind é permitida só para **layout local** (`flex`, `grid`,
   `gap-*`, `mt-*`, `w-full`) — nunca para cor, raio, tipografia ou espaçamento

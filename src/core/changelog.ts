@@ -19,23 +19,23 @@ export interface ChangelogEntry {
 
 export const CHANGELOG: ChangelogEntry[] = [
   {
-    id: '2026-07-31-inicio',
-    date: '2026-07-31',
-    emoji: '🚀',
+    id: '2026-10-21-poc',
+    date: '2026-10-21',
+    emoji: '🕳️',
     title: {
-      pt: 'Primeira versão',
-      en: 'First release',
+      pt: 'POC jogável',
+      en: 'Playable POC',
     },
     items: {
       pt: [
-        'App no ar com feedback, idioma, novidades e login opcional.',
-        'Tema claro e escuro, acompanhando o sistema.',
-        'Substitua esta entrada quando lançar sua primeira feature.',
+        'Toque em árvores e pedras para coletar biomassa e minério.',
+        'Coletor automático, melhoria de ferramentas e torretas que combinam.',
+        'Névoa de guerra com sonda exploradora e uma fissura que cospe hordas.',
       ],
       en: [
-        'App is live with feedback, language, news and optional sign-in.',
-        'Light and dark themes, following your system.',
-        'Replace this entry when you ship your first feature.',
+        'Tap trees and rocks to collect biomass and ore.',
+        'Automatic collector, tool upgrades and turrets that merge.',
+        'Fog of war with a scout probe and a fissure that spits hordes.',
       ],
     },
   },

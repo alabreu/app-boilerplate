@@ -3,12 +3,9 @@ export const pt = {
   // Comum
   'common.back': 'Voltar',
 
-  // Home (placeholder — substitua pelo seu produto)
+  // Home (botão do menu)
   'home.menuButton': 'Menu',
   'home.menuButtonUnread': 'Menu — há novidades não lidas',
-  'home.placeholderTitle': 'Seu app começa aqui',
-  'home.placeholderBody':
-    'Substitua esta tela pelo seu produto. O menu no canto superior direito já vem com feedback, idioma, novidades e login.',
 
   // Menu (sheet do botão no topo direito)
   'menu.feedback': 'Enviar feedback',
@@ -34,7 +31,8 @@ export const pt = {
   'auth.checkEmailTitle': 'Confirme seu e-mail',
   'auth.checkEmailBody':
     'Se este endereço ainda não tiver conta, enviamos um link de confirmação para {email}. Abra o link para ativar a conta e entrar.',
-  'auth.checkEmailSpam': 'Não chegou? Confira o spam — pode levar alguns minutos.',
+  'auth.checkEmailSpam':
+    'Não chegou? Confira o spam — pode levar alguns minutos.',
   'auth.backToSignIn': 'Voltar para entrar',
   'auth.signedInAs': 'Conectado como',
   'auth.signOut': 'Sair',
@@ -54,7 +52,8 @@ export const pt = {
   'feedback.sentTitle': 'Obrigado!',
   'feedback.sentBody': 'Recebemos seu feedback. 🙌',
   'feedback.sentMailBody': 'Abrimos seu email com o feedback — é só enviar. 🙌',
-  'feedback.error': 'Não foi possível enviar agora. Tente de novo em instantes.',
+  'feedback.error':
+    'Não foi possível enviar agora. Tente de novo em instantes.',
   'feedback.another': 'Enviar outro',
 
   // Doações
@@ -92,4 +91,77 @@ export const pt = {
   'update.action': 'Atualizar',
   'update.updating': 'Atualizando…',
   'update.dismiss': 'Dispensar',
+
+  // Jogo (HUD)
+  'game.name': 'Fissura',
+  'game.biomass': 'Biomassa',
+  'game.ore': 'Minério',
+  'game.core': 'Núcleo',
+  'game.hordeDormant': 'Horda {n}/{total} · subsolo quieto',
+  'game.hordeIn': 'Horda {n}/{total} em {s}s',
+  'game.hordeWarning': 'Tremor! Horda {n}/{total} em {s}s',
+  'game.hordeActive': 'Horda {n}/{total}: {left} criaturas',
+  'game.collector': 'Coletor',
+  'game.turret': 'Torreta',
+  'game.tools': 'Brocas',
+  'game.toolsLevel': 'Brocas x{n}',
+  'game.explore': 'Explorar',
+  'game.cancel': 'Cancelar',
+  'game.close': 'Fechar',
+  'game.merge': 'Combinar',
+  'game.level': 'Nv.{n}',
+  'game.levelMax': 'Nível máximo',
+  'game.unitTurret': 'Torreta Nv.{n}',
+  'game.unitCollector': 'Coletor Nv.{n}',
+  'game.turretStats': 'dano {damage} · alcance {range}',
+  'game.collectorStats': 'força {power} por golpe',
+  'game.mergeTip': 'Toque em outra igual para combinar',
+  'game.mergeNone': 'Construa outra igual para combinar',
+  'game.restart': 'Jogar de novo',
+  'game.wonTitle': 'Colônia estabilizada',
+  'game.wonBody':
+    'As {waves} hordas foram contidas. A fissura se fecha por enquanto.',
+  'game.lostTitle': 'O núcleo caiu',
+  'game.lostBody':
+    'As criaturas tomaram a refinaria. Tente defender mais cedo.',
+  'game.statsTaps': '{n} toques',
+  'game.statsCollected': '{bio} biomassa · {ore} minério',
+  'game.statsMerges': '{n} combinações · {k} criaturas',
+  'game.canvasLabel':
+    'Mapa da colônia. Toque nos elementos para coletar, arraste para mover a câmera.',
+  'game.aboutTitle': 'Fissura — POC',
+  'game.aboutBody':
+    'Uma colônia de humanos e robôs raspa a superfície de um mundo industrial morto. O que dorme no subsolo acordou.',
+
+  // Regiões do mapa
+  'region.colony': 'Colônia',
+  'region.forest': 'Bosque tóxico',
+  'region.fissure': 'Fissura',
+  'region.fungus': 'Campo de fungos',
+  'region.quarry': 'Pedreira',
+  'region.ruins': 'Ruínas',
+  'region.field': 'Campo',
+  'region.scrapyard': 'Ferro-velho',
+  'region.wastes': 'Ermos',
+
+  // Dicas (uma linha de cada vez, guiando o ciclo)
+  'hint.tap':
+    'Toque numa árvore ou pedra. Cada toque desgasta; ao cair, você recebe o recurso.',
+  'hint.more':
+    'Continue coletando: o Coletor custa {biomass} biomassa e {ore} minério.',
+  'hint.buyCollector':
+    'Já dá para comprar um Coletor: ele repete os toques sozinho.',
+  'hint.automation':
+    'O coletor trabalha sozinho. Seus toques continuam acelerando.',
+  'hint.explore': 'Toque na névoa ao lado para mandar a sonda revelar a área.',
+  'hint.buildTurret': 'Construa torretas: algo se mexe no subsolo.',
+  'hint.place': 'Toque num tile livre (marcado) para posicionar a torreta.',
+  'hint.merge': 'Toque numa torreta e depois em outra igual para combinar.',
+  'hint.mergeSelect':
+    'Agora toque em outra torreta do mesmo nível para combinar.',
+  'hint.hordeIncoming': 'Tremor! A fissura a leste vai cuspir criaturas.',
+  'hint.hordeNow': 'Horda! Defenda o núcleo. Tocar nas criaturas também ajuda.',
+  'hint.hordeCleared': 'Horda contida. Volte a coletar e reforce as defesas.',
+  'hint.placeInvalid': 'Aqui não dá: precisa ser um tile livre e revelado.',
+  'hint.noResources': 'Recursos insuficientes.',
 }

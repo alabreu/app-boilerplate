@@ -8,19 +8,23 @@
    =========================================================================== */
 :root {
   --palette-white: #ffffff;
-  --palette-sand-50: #f7f6f3;
+  --palette-sand-50: #f1ece4;
+  --palette-sand-100: #e6dfd3;
   --palette-gray-300: #d4d4d8;
-  --palette-gray-400: #a1a1aa;
-  --palette-gray-600: #52525b;
+  --palette-gray-400: #a9a2b3;
+  --palette-gray-600: #5a5262;
   --palette-gray-700: #3f3f46;
-  --palette-gray-900: #1e1e22;
+  --palette-gray-900: #221f2a;
   --palette-gray-950: #1c1c1e;
-  --palette-black-900: #131316;
-  --palette-rose-400: #fb7185;
+  --palette-black-900: #15131a;
+  --palette-rust-500: #b7472a;
+  --palette-rust-700: #8f3119;
+  --palette-amber-400: #f2b134;
+  --palette-rose-400: #ff5c7a;
   --palette-rose-700: #be123c;
-  --palette-green-400: #4ade80;
-  --palette-green-700: #15803d;
-  --palette-red-400: #f87171;
+  --palette-green-400: #8be04a;
+  --palette-green-700: #126b33;
+  --palette-red-400: #ff5c7a;
   --palette-red-700: #b91c1c;
 }
 
@@ -39,7 +43,7 @@
   --color-surface: var(--palette-white); /* cards / chips / sheets */
   --color-ink: var(--palette-gray-950); /* texto principal */
   --color-muted: var(--palette-gray-600); /* texto secundário */
-  --color-primary: var(--palette-gray-700); /* ações primárias */
+  --color-primary: var(--palette-rust-700); /* ações primárias */
   --color-on-primary: var(--palette-white); /* texto SOBRE primary */
   --color-accent: var(--palette-rose-700); /* badges e destaques */
   --color-on-accent: var(--palette-white); /* texto SOBRE accent */
@@ -99,10 +103,10 @@
     /* No escuro o botão primário INVERTE: superfície clara, texto escuro. Por
        isso `on-primary` existe — sem ele, `text-white` fixo no componente
        quebraria aqui. */
-    --color-primary: var(--palette-gray-300);
-    --color-on-primary: var(--palette-gray-950);
+    --color-primary: var(--palette-amber-400);
+    --color-on-primary: var(--palette-black-900);
     --color-accent: var(--palette-rose-400);
-    --color-on-accent: var(--palette-gray-950);
+    --color-on-accent: var(--palette-black-900);
     --color-success: var(--palette-green-400);
     --color-danger: var(--palette-red-400);
   }
@@ -114,10 +118,10 @@
   --color-surface: var(--palette-gray-900);
   --color-ink: var(--palette-sand-50);
   --color-muted: var(--palette-gray-400);
-  --color-primary: var(--palette-gray-300);
-  --color-on-primary: var(--palette-gray-950);
+  --color-primary: var(--palette-amber-400);
+  --color-on-primary: var(--palette-black-900);
   --color-accent: var(--palette-rose-400);
-  --color-on-accent: var(--palette-gray-950);
+  --color-on-accent: var(--palette-black-900);
   --color-success: var(--palette-green-400);
   --color-danger: var(--palette-red-400);
 }
